@@ -19,7 +19,8 @@ public class SUPDesk {
      */
     public static void main(String[] args) {
         telaLogin.getWindows();
-        System.out.println("Roda tela");
+        telaLogin login = new telaLogin();
+        login.setVisible(true);
         // TODO code application logic here
     }
     
