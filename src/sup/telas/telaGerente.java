@@ -18,6 +18,7 @@ import sup.desk.BDConnect;
 import sup.desk.to.Funcionario;
 import sup.desk.to.Ticket;
 import sup.desk.dao.impl.TicketDAOImpl;
+import sup.desk.util.NumberLabel;
 import sup.telas.telaLogin;
 import sup.telas.telaSuporte;
 
@@ -44,10 +45,10 @@ public class telaGerente extends javax.swing.JFrame {
 
     private void populateComponents() throws Exception{
        TicketDAOImpl ticketDao = new TicketDAOImpl(bd);
-       ArrayList tickets = ticketDao.findAllTickets();
+       ArrayList tickets = ticketDao.findIdTitleAllTickets();
        DefaultListModel lModel = new DefaultListModel();
        for(int i=0; i<tickets.size();i++){
-           Ticket ticket = (Ticket) tickets.get(i);
+           NumberLabel ticket = (NumberLabel) tickets.get(i);
            lModel.addElement(ticket);
        }
        listaTarefas.setModel(lModel);
@@ -62,10 +63,10 @@ public class telaGerente extends javax.swing.JFrame {
                                  boolean isSelected,
                                  boolean cellHasFocus) {
         super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-        if (value instanceof Ticket) {
-            Ticket ticket = (Ticket)value;
-            setText(ticket.getTitulo());
-            setToolTipText(ticket.getDescricao());
+        if (value instanceof NumberLabel) {
+            NumberLabel ticket = (NumberLabel)value;
+            setText(ticket.getLabel());
+            setToolTipText(String.valueOf(ticket.getNumber()));
         }
         return this;
      }
@@ -233,9 +234,7 @@ public class telaGerente extends javax.swing.JFrame {
 
     private void listaTarefasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listaTarefasMouseClicked
         ListModel lModel = listaTarefas.getModel();
-        Ticket selectedLine = (Ticket) lModel.getElementAt(0);
-        System.out.println("lModel.getElementAt(0) = " + selectedLine);
-        Ticket ticket = (Ticket) lModel.getElementAt(listaTarefas.getSelectedIndex());
+        NumberLabel ticket = (NumberLabel) lModel.getElementAt(listaTarefas.getSelectedIndex());
         TelaChamado tChamado = null; 
         try {
             tChamado = new TelaChamado(ticket);

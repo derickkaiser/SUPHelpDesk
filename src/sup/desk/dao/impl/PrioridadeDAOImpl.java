@@ -21,7 +21,6 @@ public class PrioridadeDAOImpl implements PrioridadeDAO{
     
     public PrioridadeDAOImpl(BDConnect bd) throws Exception{
         this.bd = bd;
-        bd.getConexao();
     }
     
     @Override

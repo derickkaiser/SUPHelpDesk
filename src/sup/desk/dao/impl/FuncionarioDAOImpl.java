@@ -23,7 +23,6 @@ public class FuncionarioDAOImpl implements FuncionarioDAO {
     
     public FuncionarioDAOImpl(BDConnect bd) throws Exception{
         this.bd = bd;
-        bd.getConexao();
     }
     
     @Override

@@ -17,10 +17,12 @@ import sup.desk.BDConnect;
 import sup.desk.dao.impl.CategoriaDAOImpl;
 import sup.desk.dao.impl.PrioridadeDAOImpl;
 import sup.desk.dao.impl.StatusDAOImpl;
+import sup.desk.dao.impl.TicketDAOImpl;
 import sup.desk.to.Categoria;
 import sup.desk.to.Prioridade;
 import sup.desk.to.Status;
 import sup.desk.to.Ticket;
+import sup.desk.util.NumberLabel;
 
 /**
  *
@@ -35,7 +37,7 @@ public class TelaChamado extends javax.swing.JFrame {
     /**
      * Creates new form TelaChamado
      */
-    public TelaChamado(Ticket ticket) throws Exception{
+    public TelaChamado(NumberLabel ticket) throws Exception{
         bd = new BDConnect();
         bd.getConexao();
         initComponents();
@@ -441,7 +443,9 @@ public class TelaChamado extends javax.swing.JFrame {
      }
     }
     
-    private void populateWithTicket(Ticket ticket) throws Exception{
+    private void populateWithTicket(NumberLabel lblValue) throws Exception{
+        TicketDAOImpl ticketDao = new TicketDAOImpl(this.bd);
+        Ticket ticket = ticketDao.findTicketById(lblValue.getNumber());
         lblTitulo.setText(ticket.getTitulo());
         txtCodigo.setText(String.valueOf(ticket.getId()));
         txtDescricao.setText(ticket.getDescricao());

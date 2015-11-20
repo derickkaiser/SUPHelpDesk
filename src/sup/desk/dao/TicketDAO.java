@@ -17,5 +17,7 @@ public interface TicketDAO {
        public Ticket findTicketByEmployeeId(int empId) throws Exception;
        public Ticket findTicketByStatus(int statusId) throws Exception;
        public Ticket findTicketByTitle(String title) throws Exception;
-       public Ticket findTicketByPriority(int priority) throws Exception;    
+       public Ticket findTicketByPriority(int priority) throws Exception;  
+       public Ticket findTicketById(int id) throws Exception;
+       public ArrayList findIdTitleAllTickets() throws Exception;
 }
