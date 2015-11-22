@@ -7,6 +7,8 @@ package sup.telas;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import sup.desk.BDConnect;
+import sup.desk.dao.impl.FuncionarioDAOImpl;
 import sup.desk.to.Funcionario;
 
 /**
@@ -15,6 +17,8 @@ import sup.desk.to.Funcionario;
  */
 public class telaLogin extends javax.swing.JFrame {
 
+    BDConnect bd = new BDConnect();
+    
     /**
      * Creates new form NovoJFrame
      */
@@ -40,6 +44,7 @@ public class telaLogin extends javax.swing.JFrame {
         txtPassword = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         txtUser.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -47,9 +52,9 @@ public class telaLogin extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText("UserName");
+        jLabel1.setText("Login:");
 
-        jLabel2.setText("Pass Word");
+        jLabel2.setText("Senha:");
 
         btnLogar.setText("Login");
         btnLogar.addActionListener(new java.awt.event.ActionListener() {
@@ -121,31 +126,33 @@ public class telaLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_btnLimparActionPerformed
 
     private void btnLogarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogarActionPerformed
-           
-        /*try {
-            String Username = txtUser.getText();
-            String Pass = txtPassword.getText();
+        try {
+            bd.getConexao();  
+            String login = txtUser.getText().toLowerCase();
+            String senha = txtPassword.getText().toLowerCase();
             
-            Funcionario login = new Funcionario(Username,Pass);
+            FuncionarioDAOImpl funcionarioDao = new FuncionarioDAOImpl(this.bd);
+            
+            Funcionario func = funcionarioDao.findFuncionarioByLogin(login, senha);
             
             lbErro.setText("Logado com Sucesso espere!");
             btnLogar.setEnabled(false);
             btnLimpar.setEnabled(false);
-            if (login.getCargo().equals("1"))
+            if (func.getCargoNome().equals("Suporte Tecnico"))
             {
                 telaSuporte ts = new telaSuporte();
+                ts.setFuncionario(func);
                 ts.setVisible(true);
-                ts.setFuncionario(login);
                 System.out.println("é Suporte");
                 this.setVisible(false);
                 this.dispose();
             }
             
-            else if (login.getCargo().equals("2"))
+            else if (func.getCargoNome().equals("Gerente Tecnico"))
             {
                 telaGerente tg = new telaGerente();
+                tg.setFuncionario(func);
                 tg.setVisible(true);
-                tg.setFuncionario(login);
                 System.out.println("é Gerente");
                 this.setVisible(false);
                 this.dispose();
@@ -153,8 +160,8 @@ public class telaLogin extends javax.swing.JFrame {
             else
             {
                 telaUsuario tu = new telaUsuario();
+                tu.setFuncionario(func);
                 tu.setVisible(true);
-                tu.setFuncionario(login);
                 System.out.println("é Usuario");
                 this.setVisible(false);
                 this.dispose();
@@ -167,7 +174,7 @@ public class telaLogin extends javax.swing.JFrame {
             lbErro.setText(e);
         } catch (Throwable ex) {
             Logger.getLogger(telaLogin.class.getName()).log(Level.SEVERE, null, ex);
-        }*/
+        }
     }//GEN-LAST:event_btnLogarActionPerformed
 
     /**

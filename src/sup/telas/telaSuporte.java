@@ -15,7 +15,6 @@ import sup.desk.to.Funcionario;
  */
 public class telaSuporte extends javax.swing.JFrame {
 
-    Funcionario Suporte;
     /**
      * Creates new form telaSuporte
      */
@@ -26,18 +25,17 @@ public class telaSuporte extends javax.swing.JFrame {
     telaSuporte(telaLogin aThis, boolean b) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    public void setFuncionario(Funcionario log)
+    public void setFuncionario(Funcionario func)
     {
-        /*try {
-            Suporte= new Funcionario(log);
-            lbUserName.setText(Suporte.getNome());
-            if(Suporte.getCargo().equals("1"))
+        try {
+            lbUserName.setText(func.getNome());
+            if(func.getCargoNome().equals("Suporte Tecnico"))
             {
                 lbCargo.setText("Suporte :");
             }
         } catch (Exception ex) {
             Logger.getLogger(telaSuporte.class.getName()).log(Level.SEVERE, null, ex);
-        }*/
+        }
        
     }
     /**

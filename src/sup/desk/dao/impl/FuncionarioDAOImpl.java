@@ -5,13 +5,14 @@
  */
 package sup.desk.dao.impl;
 
-import sup.desk.dao.FuncionarioDAO;
-import sup.desk.to.Funcionario;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import sup.desk.BDConnect;
+import sup.desk.dao.FuncionarioDAO;
+import sup.desk.to.Cargo;
+import sup.desk.to.Funcionario;
 import sup.desk.util.NumberLabel;
 
 /**
@@ -20,7 +21,7 @@ import sup.desk.util.NumberLabel;
  */
 public class FuncionarioDAOImpl implements FuncionarioDAO {
 
-    BDConnect bd = null;
+    BDConnect bd;
     
     public FuncionarioDAOImpl(BDConnect bd) throws Exception{
         this.bd = bd;
@@ -79,25 +80,30 @@ public class FuncionarioDAOImpl implements FuncionarioDAO {
         }while(rs.next());
         return funcionarios;
     }
-
-    /*public boolean logarFuncionario (Funcionario login) throws Exception
-	{
-            BancoConnect banco = new BancoConnect();
-	    banco.getConexao();
-		
-	    ResultSet rs = banco.Query("SELECT * FROM FUNCIONARIO WHERE USERNAME='" + login.getNome() + "'");
-            if (rs.first()){	
-		if((login.getSenha()).equals(rs.getString(9))){
-                    this.setCargoNome(rs.getString(3));
-                    this.setNome(rs.getString(2));
-		     return true;
-                                }
-				throw new Exception("Senha Invalida!");	
-			}
-			else
-				throw new Exception("Usuario Invalido!");
-			
-        }*/
+    
+    @Override
+    public Funcionario findFuncionarioByLogin (String login, String senha) throws Exception{	
+	    ResultSet rs = null;
+            rs = bd.query("SELECT * FROM BDIM26.FUNCIONARIO WHERE USERNAME='" + login + "'");
+            Funcionario func = new Funcionario();
+            rs.first();
+		if(senha.equals(rs.getString("SENHA"))){
+                    func.setId(rs.getInt("ID_FUNCIONARIO"));
+                    func.setNome(rs.getString("NOME_FUNCIONARIO"));
+                    func.setEmail(rs.getString("ID_CARGO"));
+                    func.setTelefone(rs.getString("E_MAIL"));
+                    func.setRamal(rs.getString("TELEFONE"));
+                    CargoDAOImpl cargoDao = new CargoDAOImpl(this.bd);
+                    Cargo cargo = cargoDao.findCargoById(rs.getInt("ID_CARGO"));
+                    func.setCargoNome(cargo.getDescricao());
+                    func.setDataMatricula(rs.getDate("DATA_MATRICULA"));
+                    func.setRamal(rs.getString("RAMAL"));
+                    func.setLogin(rs.getString("USERNAME"));
+                    func.setSenha(rs.getString("SENHA"));
+                }else
+                throw new Exception("Senha Invalida!");	    
+            return func;
+    }
     
     @Override
     public Funcionario findFuncionarioByName(String nome) {

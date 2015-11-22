@@ -17,7 +17,6 @@ import sup.telas.telaSuporte;
  */
 public class telaUsuario extends javax.swing.JFrame {
 
-    Funcionario Usuario;
     /**
      * Creates new form telaSuporte
      */
@@ -28,18 +27,17 @@ public class telaUsuario extends javax.swing.JFrame {
     telaUsuario(telaLogin aThis, boolean b) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    /*public void setFuncionario(Funcionario log)
+    public void setFuncionario(Funcionario func)
     {
-        try {
-            Usuario= new Funcionario(log);
-            lbUserName.setText(Usuario.getNome());
+        try {           
+            lbUserName.setText(func.getNome());
 
                 lbCargo.setText("Usuario :");
         } catch (Exception ex) {
             Logger.getLogger(telaUsuario.class.getName()).log(Level.SEVERE, null, ex);
         }
        
-    }*/
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
