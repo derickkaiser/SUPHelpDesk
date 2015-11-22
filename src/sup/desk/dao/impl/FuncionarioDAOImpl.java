@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import sup.desk.BDConnect;
+import sup.desk.util.NumberLabel;
 
 /**
  *
@@ -101,6 +102,21 @@ public class FuncionarioDAOImpl implements FuncionarioDAO {
     @Override
     public Funcionario findFuncionarioByName(String nome) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ArrayList findIdNameAllFuncionario() throws Exception {
+        ResultSet rs;
+        int i=0;
+        ArrayList funcionarios = new ArrayList();
+        rs = bd.query("SELECT ID_FUNCIONARIO, NOME_FUNCIONARIO FROM BDIM26.FUNCIONARIO");
+        rs.last();
+        int qtty = rs.getRow();
+        rs.first();        
+        do{
+          funcionarios.add(new NumberLabel(rs.getInt("ID_FUNCIONARIO"), rs.getString("NOME_FUNCIONARIO")));
+        }while(rs.next());
+        return funcionarios;
     }
     
 }

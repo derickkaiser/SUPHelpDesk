@@ -16,4 +16,5 @@ public interface FuncionarioDAO {
     public Funcionario findFuncionarioById(int id) throws Exception;
     public ArrayList findAllFuncionario() throws Exception;
     public Funcionario findFuncionarioByName(String nome) throws Exception;    
+    public ArrayList findIdNameAllFuncionario() throws Exception;
 }

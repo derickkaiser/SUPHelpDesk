@@ -57,8 +57,8 @@
                                       </Group>
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="txtResponsavel" max="32767" attributes="0"/>
                                           <Component id="comboStatus" max="32767" attributes="0"/>
+                                          <Component id="comboResponsavel" max="32767" attributes="0"/>
                                       </Group>
                                   </Group>
                                   <Group type="102" alignment="1" attributes="0">
@@ -91,21 +91,15 @@
                                           <Component id="jLabel5" alignment="0" min="-2" max="-2" attributes="0"/>
                                           <Component id="lblCriador" alignment="0" min="-2" max="-2" attributes="0"/>
                                       </Group>
+                                      <EmptySpace max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Group type="102" attributes="0">
-                                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                                  <Component id="txtDataConclusao" alignment="0" max="32767" attributes="0"/>
-                                                  <Component id="txtDataPrevisao" pref="130" max="32767" attributes="0"/>
-                                              </Group>
-                                          </Group>
+                                          <Component id="txtDataConclusao" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="txtDataPrevisao" max="32767" attributes="0"/>
                                           <Group type="102" alignment="1" attributes="0">
-                                              <EmptySpace pref="18" max="32767" attributes="0"/>
-                                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                                  <Component id="txtCriador" pref="130" max="32767" attributes="0"/>
-                                                  <Component id="comboCategoria" max="32767" attributes="0"/>
-                                              </Group>
+                                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                              <Component id="comboCategoria" min="-2" pref="130" max="-2" attributes="0"/>
                                           </Group>
+                                          <Component id="comboCriador" alignment="1" max="32767" attributes="0"/>
                                       </Group>
                                   </Group>
                               </Group>
@@ -145,9 +139,9 @@
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="lblResponsavel" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtResponsavel" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="lblCriador" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtCriador" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="comboResponsavel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="comboCriador" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -234,29 +228,12 @@
     </Container>
     <Component class="javax.swing.JLabel" name="lblResponsavel">
       <Properties>
-        <Property name="labelFor" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
-          <ComponentRef name="txtResponsavel"/>
-        </Property>
         <Property name="text" type="java.lang.String" value="Respons&#xe1;vel:"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JTextField" name="txtResponsavel">
-      <Properties>
-        <Property name="editable" type="boolean" value="false"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblCriador">
       <Properties>
-        <Property name="labelFor" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
-          <ComponentRef name="txtCriador"/>
-        </Property>
         <Property name="text" type="java.lang.String" value="Criador:"/>
-        <Property name="toolTipText" type="java.lang.String" value=""/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JTextField" name="txtCriador">
-      <Properties>
-        <Property name="editable" type="boolean" value="false"/>
         <Property name="toolTipText" type="java.lang.String" value=""/>
       </Properties>
     </Component>
@@ -355,6 +332,20 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JComboBox" name="comboPrioridade">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="0"/>
+        </Property>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="comboResponsavel">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="0"/>
+        </Property>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="comboCriador">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
           <StringArray count="0"/>

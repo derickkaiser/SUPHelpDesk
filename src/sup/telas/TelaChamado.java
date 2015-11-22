@@ -15,6 +15,7 @@ import javax.swing.DefaultListCellRenderer;
 import javax.swing.JList;
 import sup.desk.BDConnect;
 import sup.desk.dao.impl.CategoriaDAOImpl;
+import sup.desk.dao.impl.FuncionarioDAOImpl;
 import sup.desk.dao.impl.PrioridadeDAOImpl;
 import sup.desk.dao.impl.StatusDAOImpl;
 import sup.desk.dao.impl.TicketDAOImpl;
@@ -55,9 +56,19 @@ public class TelaChamado extends javax.swing.JFrame {
         ArrayList categorias = categoriaDao.findAllCategoria();
         PrioridadeDAOImpl prioridadeDao = new PrioridadeDAOImpl(this.bd);
         prioridades = prioridadeDao.findAllPrioridade();
-        StatusDAOImpl statusDao = new StatusDAOImpl(bd);
+        StatusDAOImpl statusDao = new StatusDAOImpl(this.bd);
         ArrayList status = statusDao.findAllStatus();
-        System.out.println("PASSOU AQUI!");
+        FuncionarioDAOImpl funcionarioDao = new FuncionarioDAOImpl(this.bd);
+        ArrayList funcionarios = funcionarioDao.findIdNameAllFuncionario();
+        DefaultComboBoxModel funcModel = new DefaultComboBoxModel();
+        for(int i=0;i<funcionarios.size();i++){
+            NumberLabel nLabel = (NumberLabel) funcionarios.get(i);
+            funcModel.addElement(nLabel);
+        }
+        comboResponsavel.setModel(funcModel);
+        comboCriador.setModel(funcModel);
+        comboCriador.setRenderer(new FuncionarioListCellRenderer());
+        comboResponsavel.setRenderer(new FuncionarioListCellRenderer());
         comboCategoria.setModel(new DefaultComboBoxModel(categorias.toArray()));
         comboCategoria.setRenderer(new CategoriaListCellRenderer());
         comboPrioridade.setModel(new DefaultComboBoxModel(prioridades.toArray()));
@@ -81,9 +92,7 @@ public class TelaChamado extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         txtDescricao = new javax.swing.JTextArea();
         lblResponsavel = new javax.swing.JLabel();
-        txtResponsavel = new javax.swing.JTextField();
         lblCriador = new javax.swing.JLabel();
-        txtCriador = new javax.swing.JTextField();
         lblStatus = new javax.swing.JLabel();
         lblCategoria = new javax.swing.JLabel();
         btnFechar = new javax.swing.JButton();
@@ -101,6 +110,8 @@ public class TelaChamado extends javax.swing.JFrame {
         comboStatus = new javax.swing.JComboBox();
         comboCategoria = new javax.swing.JComboBox();
         comboPrioridade = new javax.swing.JComboBox();
+        comboResponsavel = new javax.swing.JComboBox();
+        comboCriador = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -117,17 +128,10 @@ public class TelaChamado extends javax.swing.JFrame {
         txtDescricao.setRows(5);
         jScrollPane1.setViewportView(txtDescricao);
 
-        lblResponsavel.setLabelFor(txtResponsavel);
         lblResponsavel.setText("Responsável:");
 
-        txtResponsavel.setEditable(false);
-
-        lblCriador.setLabelFor(txtCriador);
         lblCriador.setText("Criador:");
         lblCriador.setToolTipText("");
-
-        txtCriador.setEditable(false);
-        txtCriador.setToolTipText("");
 
         lblStatus.setText("Status:");
 
@@ -203,8 +207,8 @@ public class TelaChamado extends javax.swing.JFrame {
                                             .addComponent(lblStatus))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(txtResponsavel)
-                                            .addComponent(comboStatus, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                            .addComponent(comboStatus, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(comboResponsavel, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -227,17 +231,14 @@ public class TelaChamado extends javax.swing.JFrame {
                                             .addComponent(jLabel2)
                                             .addComponent(jLabel5)
                                             .addComponent(lblCriador))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addGap(18, 18, 18)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                    .addComponent(txtDataConclusao)
-                                                    .addComponent(txtDataPrevisao, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)))
+                                            .addComponent(txtDataConclusao)
+                                            .addComponent(txtDataPrevisao)
                                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                    .addComponent(txtCriador, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
-                                                    .addComponent(comboCategoria, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))))
+                                                .addGap(0, 0, Short.MAX_VALUE)
+                                                .addComponent(comboCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(comboCriador, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                             .addComponent(lblTitulo)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel3)
@@ -265,9 +266,9 @@ public class TelaChamado extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblResponsavel)
-                            .addComponent(txtResponsavel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblCriador)
-                            .addComponent(txtCriador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(comboResponsavel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(comboCriador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(12, 12, 12)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblStatus)
@@ -311,13 +312,14 @@ public class TelaChamado extends javax.swing.JFrame {
 
     private void btnEditarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarMouseClicked
        txtDescricao.setEditable(true);
-       txtResponsavel.setEditable(true);
+       comboResponsavel.setEditable(true);
        comboStatus.setEditable(true);
        comboCategoria.setEditable(true);
        txtDataAbertura.setEditable(true);
        txtDataConclusao.setEditable(true);
        txtDataPrevisao.setEditable(true);
        comboPrioridade.setEditable(true);
+       comboCriador.setEditable(true);
        btnAlterar.setEnabled(true);
        btnEditar.setEnabled(false);
        comboCategoria.setRenderer(new CategoriaListCellRenderer());
@@ -374,7 +376,9 @@ public class TelaChamado extends javax.swing.JFrame {
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnFechar;
     private javax.swing.JComboBox comboCategoria;
+    private javax.swing.JComboBox comboCriador;
     private javax.swing.JComboBox comboPrioridade;
+    private javax.swing.JComboBox comboResponsavel;
     private javax.swing.JComboBox comboStatus;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -390,14 +394,28 @@ public class TelaChamado extends javax.swing.JFrame {
     private javax.swing.JLabel lblStatus;
     private javax.swing.JLabel lblTitulo;
     private javax.swing.JTextField txtCodigo;
-    private javax.swing.JTextField txtCriador;
     private javax.swing.JTextField txtDataAbertura;
     private javax.swing.JTextField txtDataConclusao;
     private javax.swing.JTextField txtDataPrevisao;
     private javax.swing.JTextArea txtDescricao;
-    private javax.swing.JTextField txtResponsavel;
     // End of variables declaration//GEN-END:variables
 
+    class FuncionarioListCellRenderer extends DefaultListCellRenderer {
+    public Component getListCellRendererComponent(JList<?> list,
+                                 Object value,
+                                 int index,
+                                 boolean isSelected,
+                                 boolean cellHasFocus) {
+        super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+        if (value instanceof NumberLabel) {
+            NumberLabel func = (NumberLabel)value;
+            setText(func.getLabel());
+            setToolTipText(String.valueOf(func.getNumber()));
+        }
+        return this;
+     }
+    }
+    
     class PrioridadeListCellRenderer extends DefaultListCellRenderer {
     public Component getListCellRendererComponent(JList<?> list,
                                  Object value,
@@ -449,8 +467,8 @@ public class TelaChamado extends javax.swing.JFrame {
         lblTitulo.setText(ticket.getTitulo());
         txtCodigo.setText(String.valueOf(ticket.getId()));
         txtDescricao.setText(ticket.getDescricao());
-        txtCriador.setText(ticket.getSuporteNome());
-        txtResponsavel.setText(ticket.getClienteNome());
+        //txtCriador.setText(ticket.getSuporteNome());
+        //txtResponsavel.setText(ticket.getClienteNome());
         for(int i=0; i<comboStatus.getItemCount();i++){
             Status status = (Status) comboStatus.getItemAt(i);
             if(status.getDescricao().equals(ticket.getStatusDesc())){
