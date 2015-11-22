@@ -6,13 +6,17 @@
 package sup.telas;
 
 import java.awt.Component;
+import java.awt.Dialog;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListCellRenderer;
+import javax.swing.JFrame;
 import javax.swing.JList;
+import javax.swing.SwingUtilities;
 import sup.desk.BDConnect;
 import sup.desk.dao.impl.CategoriaDAOImpl;
 import sup.desk.dao.impl.FuncionarioDAOImpl;
@@ -326,6 +330,7 @@ public class TelaChamado extends javax.swing.JFrame {
 
     private void btnFecharMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnFecharMouseClicked
         this.dispose();
+        
     }//GEN-LAST:event_btnFecharMouseClicked
 
     private void btnEditarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarMouseClicked
@@ -344,7 +349,20 @@ public class TelaChamado extends javax.swing.JFrame {
 
     private void btnAlterarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAlterarMouseClicked
         btnAlterar.setEnabled(false);
-        
+        try {
+            TicketDAOImpl ticketDao = new TicketDAOImpl(this.bd);
+            NumberLabel responsavel = (NumberLabel) comboResponsavel.getItemAt(comboResponsavel.getSelectedIndex());
+            NumberLabel criador = (NumberLabel) comboCriador.getItemAt(comboCriador.getSelectedIndex());
+            Status status = (Status) comboStatus.getItemAt(comboStatus.getSelectedIndex());
+            Prioridade prioridade = (Prioridade) comboPrioridade.getItemAt(comboPrioridade.getSelectedIndex());
+            Categoria categoria = (Categoria) comboCategoria.getItemAt(comboCategoria.getSelectedIndex());
+            Ticket ticket = new Ticket(Integer.valueOf(txtCodigo.getText()), lblTitulo.getText(), txtDescricao.getText(), String.valueOf(responsavel.getNumber()), String.valueOf(criador.getNumber()), String.valueOf(prioridade.getId()), String.valueOf(status.getId()), String.valueOf(categoria.getId()), Date.valueOf(txtDataAbertura.getText()), Date.valueOf(txtDataConclusao.getText()), Date.valueOf(txtDataPrevisao.getText()));
+            ticketDao.updateTicket(ticket);
+            Dialog dialog = new Dialog(this, "Atalizacao do chamado "+ lblTitulo.getText() + "atualizado com sucesso.");
+            dialog.setVisible(true);
+        } catch (Exception ex) {
+            Logger.getLogger(TelaChamado.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnAlterarMouseClicked
 
     /**

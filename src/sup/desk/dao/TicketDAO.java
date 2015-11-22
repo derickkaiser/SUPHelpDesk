@@ -20,4 +20,5 @@ public interface TicketDAO {
        public Ticket findTicketByPriority(int priority) throws Exception;  
        public Ticket findTicketById(int id) throws Exception;
        public ArrayList findIdTitleAllTickets() throws Exception;
+       public void updateTicket(Ticket ticket) throws Exception;
 }

@@ -134,6 +134,13 @@ public class TicketDAOImpl implements TicketDAO{
           ticket.setDataPrevisao(rs.getDate("DATA_PREVISAO"));
         return ticket;
     }
-    
-    
+
+    @Override
+    public void updateTicket(Ticket ticket) throws Exception {
+       String updateQuery = "UPDATE BDIM26.TICKET SET DESCRICAO='"+ticket.getDescricao()+"', ID_RESPONSAVEL="+Integer.valueOf(ticket.getSuporteNome())+", ID_CLIENTE="+Integer.valueOf(ticket.getClienteNome()) + 
+               ", ID_PRIORIDADE=" + Integer.valueOf(ticket.getPrioridadeDesc()) + ", ID_STATUS=" + Integer.valueOf(ticket.getStatusDesc()) + ", DATA_ABERTURA=TO_DATE('" + String.valueOf(ticket.getDataAbertura()) +
+               "','yyyy-mm-dd'), DATA_CONCLUSAO=TO_DATE('" + String.valueOf(ticket.getDataConclusao()) + "','yyyy-mm-dd'), DATA_PREVISAO=TO_DATE('" + String.valueOf(ticket.getDataPrevisao()) + "','yyyy-mm-dd') WHERE ID_TICKET=" + ticket.getId();
+       System.out.println(updateQuery);
+       bd.update(updateQuery);
+    }   
 }
