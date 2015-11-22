@@ -35,6 +35,8 @@ public class TelaChamado extends javax.swing.JFrame {
     
     ArrayList prioridades = null;
     
+    FuncionarioListCellRenderer cellRenderer = new FuncionarioListCellRenderer();
+    
     /**
      * Creates new form TelaChamado
      */
@@ -60,15 +62,20 @@ public class TelaChamado extends javax.swing.JFrame {
         ArrayList status = statusDao.findAllStatus();
         FuncionarioDAOImpl funcionarioDao = new FuncionarioDAOImpl(this.bd);
         ArrayList funcionarios = funcionarioDao.findIdNameAllFuncionario();
-        DefaultComboBoxModel funcModel = new DefaultComboBoxModel();
+        DefaultComboBoxModel respModel = new DefaultComboBoxModel();
+        DefaultComboBoxModel criadorModel = new DefaultComboBoxModel();
         for(int i=0;i<funcionarios.size();i++){
             NumberLabel nLabel = (NumberLabel) funcionarios.get(i);
-            funcModel.addElement(nLabel);
+            respModel.addElement(nLabel);
         }
-        comboResponsavel.setModel(funcModel);
-        comboCriador.setModel(funcModel);
-        comboCriador.setRenderer(new FuncionarioListCellRenderer());
-        comboResponsavel.setRenderer(new FuncionarioListCellRenderer());
+        for(int i=0;i<funcionarios.size();i++){
+            NumberLabel nLabel = (NumberLabel) funcionarios.get(i);
+            criadorModel.addElement(nLabel);
+        }
+        comboResponsavel.setModel(respModel);
+        comboCriador.setModel(criadorModel);
+        comboCriador.setRenderer(this.cellRenderer);
+        comboResponsavel.setRenderer(this.cellRenderer);
         comboCategoria.setModel(new DefaultComboBoxModel(categorias.toArray()));
         comboCategoria.setRenderer(new CategoriaListCellRenderer());
         comboPrioridade.setModel(new DefaultComboBoxModel(prioridades.toArray()));
@@ -124,6 +131,7 @@ public class TelaChamado extends javax.swing.JFrame {
         lblDescricao.setLabelFor(txtDescricao);
         lblDescricao.setText("Descricao:");
 
+        txtDescricao.setEditable(false);
         txtDescricao.setColumns(20);
         txtDescricao.setRows(5);
         jScrollPane1.setViewportView(txtDescricao);
@@ -176,6 +184,16 @@ public class TelaChamado extends javax.swing.JFrame {
                 btnAlterarMouseClicked(evt);
             }
         });
+
+        comboStatus.setEnabled(false);
+
+        comboCategoria.setEnabled(false);
+
+        comboPrioridade.setEnabled(false);
+
+        comboResponsavel.setEnabled(false);
+
+        comboCriador.setEnabled(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -312,19 +330,16 @@ public class TelaChamado extends javax.swing.JFrame {
 
     private void btnEditarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarMouseClicked
        txtDescricao.setEditable(true);
-       comboResponsavel.setEditable(true);
-       comboStatus.setEditable(true);
-       comboCategoria.setEditable(true);
+       comboResponsavel.setEnabled(true);
+       comboStatus.setEnabled(true);
+       comboCategoria.setEnabled(true);
        txtDataAbertura.setEditable(true);
        txtDataConclusao.setEditable(true);
        txtDataPrevisao.setEditable(true);
-       comboPrioridade.setEditable(true);
-       comboCriador.setEditable(true);
+       comboPrioridade.setEnabled(true);
+       comboCriador.setEnabled(true);
        btnAlterar.setEnabled(true);
        btnEditar.setEnabled(false);
-       comboCategoria.setRenderer(new CategoriaListCellRenderer());
-       comboPrioridade.setModel(new DefaultComboBoxModel(prioridades.toArray()));
-       comboPrioridade.setRenderer(new PrioridadeListCellRenderer());
     }//GEN-LAST:event_btnEditarMouseClicked
 
     private void btnAlterarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAlterarMouseClicked
@@ -467,8 +482,20 @@ public class TelaChamado extends javax.swing.JFrame {
         lblTitulo.setText(ticket.getTitulo());
         txtCodigo.setText(String.valueOf(ticket.getId()));
         txtDescricao.setText(ticket.getDescricao());
-        //txtCriador.setText(ticket.getSuporteNome());
-        //txtResponsavel.setText(ticket.getClienteNome());
+        for(int i=0;i<comboResponsavel.getItemCount();i++){
+            NumberLabel nLabel = (NumberLabel) comboResponsavel.getItemAt(i);
+            if(nLabel.getLabel().equals(ticket.getSuporteNome())){
+                comboResponsavel.setSelectedIndex(i);
+                break;
+            }
+        }
+        for(int i=0;i<comboCriador.getItemCount();i++){
+            NumberLabel nLabel = (NumberLabel) comboCriador.getItemAt(i);
+            if(nLabel.getLabel().equals(ticket.getClienteNome())){
+                comboCriador.setSelectedIndex(i);
+                break;
+            }
+        }
         for(int i=0; i<comboStatus.getItemCount();i++){
             Status status = (Status) comboStatus.getItemAt(i);
             if(status.getDescricao().equals(ticket.getStatusDesc())){
