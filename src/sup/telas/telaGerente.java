@@ -107,9 +107,7 @@ public class telaGerente extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
-        jMenuItem3 = new javax.swing.JMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
+        jMenu4 = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
         btnLogout = new javax.swing.JMenu();
 
@@ -143,15 +141,13 @@ public class telaGerente extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
-        jMenu2.setText("Mensagens");
-
-        jMenuItem3.setText("Nova Mensagem");
-        jMenu2.add(jMenuItem3);
-
-        jMenuItem4.setText("Mensagens Enviadas");
-        jMenu2.add(jMenuItem4);
-
-        jMenuBar1.add(jMenu2);
+        jMenu4.setText("Funcionario");
+        jMenu4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu4MouseClicked(evt);
+            }
+        });
+        jMenuBar1.add(jMenu4);
 
         jMenu3.setText("Relatórios");
         jMenu3.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -209,7 +205,7 @@ public class telaGerente extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(scrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
                 .addComponent(btnLida)
                 .addContainerGap())
         );
@@ -240,6 +236,16 @@ public class telaGerente extends javax.swing.JFrame {
         }
         tChamado.setVisible(true);
     }//GEN-LAST:event_listaTarefasMouseClicked
+
+    private void jMenu4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu4MouseClicked
+        TelaListaFuncionarios tFuncionarios = null;
+        try {
+            tFuncionarios = new TelaListaFuncionarios(this.bd);
+        } catch (Exception ex) {
+            Logger.getLogger(telaGerente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        tFuncionarios.setVisible(true);
+    }//GEN-LAST:event_jMenu4MouseClicked
 
     /**
      * @param args the command line arguments
@@ -289,13 +295,11 @@ public class telaGerente extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lbCargo;
     private javax.swing.JLabel lbUserName;
