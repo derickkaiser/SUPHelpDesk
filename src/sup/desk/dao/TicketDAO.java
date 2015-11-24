@@ -21,4 +21,5 @@ public interface TicketDAO {
        public Ticket findTicketById(int id) throws Exception;
        public ArrayList findIdTitleAllTickets() throws Exception;
        public void updateTicket(Ticket ticket) throws Exception;
+       public void insertTicket(Ticket ticket) throws Exception;
 }

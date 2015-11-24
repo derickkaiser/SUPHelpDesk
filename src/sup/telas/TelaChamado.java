@@ -85,7 +85,7 @@ public class TelaChamado extends javax.swing.JFrame {
         comboPrioridade.setModel(new DefaultComboBoxModel(prioridades.toArray()));
         comboPrioridade.setRenderer(new PrioridadeListCellRenderer());
         comboStatus.setModel(new DefaultComboBoxModel(status.toArray()));
-        comboStatus.setRenderer(new StatusListCellRenderer());        
+        comboStatus.setRenderer(new StatusListCellRenderer());
     }
 
     /**

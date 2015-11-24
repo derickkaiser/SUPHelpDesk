@@ -143,4 +143,15 @@ public class TicketDAOImpl implements TicketDAO{
        System.out.println(updateQuery);
        bd.update(updateQuery);
     }   
+
+    @Override
+    public void insertTicket(Ticket ticket) throws Exception {
+        String insertSql = "INSERT INTO BDIM26.TICKET('ID_TICKET', 'TITULO', 'DESCRICAO'," +
+        " 'ID_RESPONSAVEL', 'ID_SUPORTE', 'ID_STATUS', 'ID_CATEGORIA', 'DATA_ABERTURA'," + 
+        " 'DATA_PREVISAO', 'DATA_CONCLUSAO') VALUES(SEQ_TICKET.NEXTVAL, '" + ticket.getTitulo() + 
+        "', '" + ticket.getDescricao() +"', "+ idResponsavel + ", "+ idSuporte + ", " + idStatus + 
+        ", " + idCategoria + ", " + ticket.getDataAbertura().toString() + ", " + 
+        ticket.getDataPrevisao().toString() + ", " + ticket.getDataConclusao().toString() +")";
+        ResultSet rs = bd.query(insertSql);
+    }
 }
