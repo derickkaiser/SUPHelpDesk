@@ -381,7 +381,7 @@ public class TelaCriarChamado extends javax.swing.JFrame {
             Prioridade prioridade = (Prioridade) comboPrioridade.getItemAt(comboPrioridade.getSelectedIndex());
             Categoria categoria = (Categoria) comboCategoria.getItemAt(comboCategoria.getSelectedIndex());
             Ticket ticket = new Ticket(Integer.valueOf(txtCodigo.getText()), lblTitulo.getText(), txtDescricao.getText(), String.valueOf(responsavel.getNumber()), String.valueOf(criador.getNumber()), String.valueOf(prioridade.getId()), String.valueOf(status.getId()), String.valueOf(categoria.getId()), Date.valueOf(txtDataAbertura.getText()), Date.valueOf(txtDataConclusao.getText()), Date.valueOf(txtDataPrevisao.getText()));
-            ticketDao.updateTicket(ticket);
+            ticketDao.insertTicket(ticket);
             Dialog dialog = new Dialog(this, "Atalizacao do chamado "+ lblTitulo.getText() + "atualizado com sucesso.");
             dialog.setVisible(true);
         } catch (Exception ex) {
