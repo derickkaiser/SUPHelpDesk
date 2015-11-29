@@ -20,9 +20,9 @@ public class Ticket {
     private String prioridadeDesc;
     private String statusDesc;
     private String categoriaDesc;
-    private Date dataAbertura;
-    private Date dataConclusao;
-    private Date dataPrevisao;
+    private String dataAbertura;
+    private String dataConclusao;
+    private String dataPrevisao;
 
     public int getId() {
         return id;
@@ -88,31 +88,31 @@ public class Ticket {
         this.categoriaDesc = categoriaDesc;
     }
 
-    public Date getDataAbertura() {
+    public String getDataAbertura() {
         return dataAbertura;
     }
 
-    public void setDataAbertura(Date dataAbertura) {
+    public void setDataAbertura(String dataAbertura) {
         this.dataAbertura = dataAbertura;
     }
 
-    public Date getDataConclusao() {
+    public String getDataConclusao() {
         return dataConclusao;
     }
 
-    public void setDataConclusao(Date dataConclusao) {
+    public void setDataConclusao(String dataConclusao) {
         this.dataConclusao = dataConclusao;
     }
 
-    public Date getDataPrevisao() {
+    public String getDataPrevisao() {
         return dataPrevisao;
     }
 
-    public void setDataPrevisao(Date dataPrevisao) {
+    public void setDataPrevisao(String dataPrevisao) {
         this.dataPrevisao = dataPrevisao;
     }
 
-    public Ticket(int id, String titulo, String descricao, String suporteNome, String clienteNome, String prioridadeDesc, String statusDesc, String categoriaDesc, Date dataAbertura, Date dataConclusao, Date dataPrevisao) {
+    public Ticket(int id, String titulo, String descricao, String suporteNome, String clienteNome, String prioridadeDesc, String statusDesc, String categoriaDesc, String dataAbertura, String dataConclusao, String dataPrevisao) {
         this.id = id;
         this.titulo = titulo;
         this.descricao = descricao;

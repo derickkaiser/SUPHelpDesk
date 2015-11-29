@@ -9,6 +9,7 @@ import java.awt.Component;
 import java.awt.Dialog;
 import java.util.ArrayList;
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
@@ -164,8 +165,6 @@ public class TelaCriarChamado extends javax.swing.JFrame {
         txtDataAbertura = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         txtDataConclusao = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
-        txtCodigo = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         txtDataPrevisao = new javax.swing.JTextField();
@@ -175,21 +174,15 @@ public class TelaCriarChamado extends javax.swing.JFrame {
         comboCategoria = new javax.swing.JComboBox();
         lblTitulo = new javax.swing.JLabel();
         comboPrioridade = new javax.swing.JComboBox();
-        jTextField1 = new javax.swing.JTextField();
+        txtTitulo = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         lblDescricao.setText("Descricao:");
 
-        comboResponsavel.setEditable(true);
-        comboResponsavel.setEnabled(false);
-
         txtDescricao.setColumns(20);
         txtDescricao.setRows(5);
         jScrollPane1.setViewportView(txtDescricao);
-
-        comboCriador.setEditable(true);
-        comboCriador.setEnabled(false);
 
         lblResponsavel.setText("Responsável:");
 
@@ -211,9 +204,6 @@ public class TelaCriarChamado extends javax.swing.JFrame {
 
         jLabel2.setText("Data Conclusão:");
 
-        jLabel3.setText("Código:");
-        jLabel3.setPreferredSize(new java.awt.Dimension(0, 0));
-
         jLabel4.setText("Prioridade:");
 
         jLabel5.setText("Data Previsão:");
@@ -225,23 +215,14 @@ public class TelaCriarChamado extends javax.swing.JFrame {
             }
         });
 
-        comboStatus.setEditable(true);
-        comboStatus.setEnabled(false);
-
         lblCriarChamados.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lblCriarChamados.setText("Abrir Chamado");
 
-        comboCategoria.setEditable(true);
-        comboCategoria.setEnabled(false);
-
         lblTitulo.setText("Titulo:");
 
-        comboPrioridade.setEditable(true);
-        comboPrioridade.setEnabled(false);
-
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        txtTitulo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                txtTituloActionPerformed(evt);
             }
         });
 
@@ -250,9 +231,15 @@ public class TelaCriarChamado extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(117, 117, 117)
+                .addComponent(btnAlterar)
+                .addGap(120, 120, 120)
+                .addComponent(btnFechar)
+                .addGap(0, 178, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -285,28 +272,18 @@ public class TelaCriarChamado extends javax.swing.JFrame {
                             .addComponent(comboCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtDataConclusao, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtDataPrevisao, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addComponent(lblDescricao)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(194, 194, 194)
+                        .addComponent(lblCriarChamados))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lblDescricao)
+                            .addComponent(lblTitulo))
                         .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 418, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(31, 31, 31)
-                        .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(30, 30, 30)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblCriarChamados)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblTitulo)
-                                .addGap(18, 18, 18)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(txtTitulo)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 418, Short.MAX_VALUE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(117, 117, 117)
-                .addComponent(btnAlterar)
-                .addGap(120, 120, 120)
-                .addComponent(btnFechar)
-                .addGap(0, 178, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -314,12 +291,9 @@ public class TelaCriarChamado extends javax.swing.JFrame {
                 .addGap(6, 6, 6)
                 .addComponent(lblCriarChamados)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(lblTitulo)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblTitulo))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblDescricao)
@@ -380,18 +354,21 @@ public class TelaCriarChamado extends javax.swing.JFrame {
             Status status = (Status) comboStatus.getItemAt(comboStatus.getSelectedIndex());
             Prioridade prioridade = (Prioridade) comboPrioridade.getItemAt(comboPrioridade.getSelectedIndex());
             Categoria categoria = (Categoria) comboCategoria.getItemAt(comboCategoria.getSelectedIndex());
-            Ticket ticket = new Ticket(Integer.valueOf(txtCodigo.getText()), lblTitulo.getText(), txtDescricao.getText(), String.valueOf(responsavel.getNumber()), String.valueOf(criador.getNumber()), String.valueOf(prioridade.getId()), String.valueOf(status.getId()), String.valueOf(categoria.getId()), Date.valueOf(txtDataAbertura.getText()), Date.valueOf(txtDataConclusao.getText()), Date.valueOf(txtDataPrevisao.getText()));
+            Ticket ticket = new Ticket(0, txtTitulo.getText(), txtDescricao.getText(), String.valueOf(responsavel.getNumber()), 
+                    String.valueOf(criador.getNumber()), String.valueOf(prioridade.getId()), String.valueOf(status.getId()), 
+                    String.valueOf(categoria.getId()), txtDataAbertura.getText(), 
+                    txtDataConclusao.getText(), txtDataPrevisao.getText());
             ticketDao.insertTicket(ticket);
-            Dialog dialog = new Dialog(this, "Atalizacao do chamado "+ lblTitulo.getText() + "atualizado com sucesso.");
+            Dialog dialog = new Dialog(this, "Chamado "+ lblTitulo.getText() + " cadastrado com sucesso.");
             dialog.setVisible(true);
         } catch (Exception ex) {
             Logger.getLogger(TelaChamado.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnAlterarMouseClicked
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void txtTituloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTituloActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_txtTituloActionPerformed
 
     /**
      * @param args the command line arguments
@@ -442,11 +419,9 @@ public class TelaCriarChamado extends javax.swing.JFrame {
     private javax.swing.JComboBox comboStatus;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel lblCategoria;
     private javax.swing.JLabel lblCriador;
     private javax.swing.JLabel lblCriarChamados;
@@ -454,10 +429,10 @@ public class TelaCriarChamado extends javax.swing.JFrame {
     private javax.swing.JLabel lblResponsavel;
     private javax.swing.JLabel lblStatus;
     private javax.swing.JLabel lblTitulo;
-    private javax.swing.JTextField txtCodigo;
     private javax.swing.JTextField txtDataAbertura;
     private javax.swing.JTextField txtDataConclusao;
     private javax.swing.JTextField txtDataPrevisao;
     private javax.swing.JTextArea txtDescricao;
+    private javax.swing.JTextField txtTitulo;
     // End of variables declaration//GEN-END:variables
 }

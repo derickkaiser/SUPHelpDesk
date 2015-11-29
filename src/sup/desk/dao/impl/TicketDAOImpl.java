@@ -62,9 +62,9 @@ public class TicketDAOImpl implements TicketDAO{
           ticket.setCategoriaDesc(categoria.getDescricao());
           ticket.setSuporteNome(resp.getNome());
           ticket.setClienteNome(cliente.getNome());
-          ticket.setDataAbertura(rs.getDate("DATA_ABERTURA"));
-          ticket.setDataConclusao(rs.getDate("DATA_CONCLUSAO"));
-          ticket.setDataPrevisao(rs.getDate("DATA_PREVISAO"));
+          ticket.setDataAbertura(String.valueOf(rs.getDate("DATA_ABERTURA")));
+          ticket.setDataConclusao(String.valueOf(rs.getDate("DATA_CONCLUSAO")));
+          ticket.setDataPrevisao(String.valueOf(rs.getDate("DATA_PREVISAO")));
           tickets.add(ticket);
         }while(rs.next());
         return tickets;
@@ -129,9 +129,9 @@ public class TicketDAOImpl implements TicketDAO{
           ticket.setCategoriaDesc(categoria.getDescricao());
           ticket.setSuporteNome(resp.getNome());
           ticket.setClienteNome(cliente.getNome());
-          ticket.setDataAbertura(rs.getDate("DATA_ABERTURA"));
-          ticket.setDataConclusao(rs.getDate("DATA_CONCLUSAO"));
-          ticket.setDataPrevisao(rs.getDate("DATA_PREVISAO"));
+          ticket.setDataAbertura(String.valueOf(rs.getDate("DATA_ABERTURA")));
+          ticket.setDataConclusao(String.valueOf(rs.getDate("DATA_CONCLUSAO")));
+          ticket.setDataPrevisao(String.valueOf(rs.getDate("DATA_PREVISAO")));
         return ticket;
     }
 
@@ -146,12 +146,13 @@ public class TicketDAOImpl implements TicketDAO{
 
     @Override
     public void insertTicket(Ticket ticket) throws Exception {
-        String insertSql = "INSERT INTO BDIM26.TICKET('ID_TICKET', 'TITULO', 'DESCRICAO'," +
-        " 'ID_RESPONSAVEL', 'ID_SUPORTE', 'ID_STATUS', 'ID_CATEGORIA', 'DATA_ABERTURA'," + 
-        " 'DATA_PREVISAO', 'DATA_CONCLUSAO') VALUES(SEQ_TICKET.NEXTVAL, '" + ticket.getTitulo() + 
+        String insertSql = "INSERT INTO TICKET(ID_TICKET, TITULO, DESCRICAO," +
+        " ID_RESPONSAVEL, ID_CLIENTE, ID_STATUS, ID_CATEGORIA, ID_PRIORIDADE, DATA_ABERTURA," + 
+        " DATA_PREVISAO, DATA_CONCLUSAO) VALUES(SEQ_TICKET.NEXTVAL, '" + ticket.getTitulo() + 
         "', '" + ticket.getDescricao() +"', "+ Integer.valueOf(ticket.getSuporteNome()) + ", "+ ticket.getClienteNome() + ", " + ticket.getStatusDesc() + 
-        ", " + ticket.getCategoriaDesc() + ", " + ticket.getDataAbertura().toString() + ", " + 
-        ticket.getDataPrevisao().toString() + ", " + ticket.getDataConclusao().toString() +")";
-        ResultSet rs = bd.query(insertSql);
+        ", " + ticket.getCategoriaDesc() +  ", " + ticket.getPrioridadeDesc() + ", TO_DATE('" + String.valueOf(ticket.getDataAbertura()) + "','yyyy-mm-dd'), TO_DATE('" + 
+        String.valueOf(ticket.getDataPrevisao()) + "','yyyy-mm-dd'), TO_DATE('" + String.valueOf(ticket.getDataConclusao()) +"','yyyy-mm-dd'))";
+        System.out.println(insertSql);
+        bd.update(insertSql);
     }
 }

@@ -357,7 +357,10 @@ public class TelaChamado extends javax.swing.JFrame {
             Status status = (Status) comboStatus.getItemAt(comboStatus.getSelectedIndex());
             Prioridade prioridade = (Prioridade) comboPrioridade.getItemAt(comboPrioridade.getSelectedIndex());
             Categoria categoria = (Categoria) comboCategoria.getItemAt(comboCategoria.getSelectedIndex());
-            Ticket ticket = new Ticket(Integer.valueOf(txtCodigo.getText()), lblTitulo.getText(), txtDescricao.getText(), String.valueOf(responsavel.getNumber()), String.valueOf(criador.getNumber()), String.valueOf(prioridade.getId()), String.valueOf(status.getId()), String.valueOf(categoria.getId()), Date.valueOf(txtDataAbertura.getText()), Date.valueOf(txtDataConclusao.getText()), Date.valueOf(txtDataPrevisao.getText()));
+            Ticket ticket = new Ticket(Integer.valueOf(txtCodigo.getText()), lblTitulo.getText(), txtDescricao.getText(), 
+                    String.valueOf(responsavel.getNumber()), String.valueOf(criador.getNumber()), String.valueOf(prioridade.getId()), 
+                    String.valueOf(status.getId()), String.valueOf(categoria.getId()), txtDataAbertura.getText(), 
+                    txtDataConclusao.getText(), txtDataPrevisao.getText());
             ticketDao.updateTicket(ticket);
             Dialog dialog = new Dialog(this, "Atalizacao do chamado "+ lblTitulo.getText() + "atualizado com sucesso.");
             dialog.setVisible(true);
