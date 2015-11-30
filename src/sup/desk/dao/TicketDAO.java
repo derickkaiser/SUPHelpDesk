@@ -14,7 +14,7 @@ import java.util.ArrayList;
  */
 public interface TicketDAO {
        public ArrayList findAllTickets() throws Exception;
-       public Ticket findTicketByEmployeeId(int empId) throws Exception;
+       public ArrayList findTicketBySupportId(int empId) throws Exception;
        public Ticket findTicketByStatus(int statusId) throws Exception;
        public Ticket findTicketByTitle(String title) throws Exception;
        public Ticket findTicketByPriority(int priority) throws Exception;  

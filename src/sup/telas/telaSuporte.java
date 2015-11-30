@@ -5,10 +5,19 @@
  */
 package sup.telas;
 
+import java.awt.Component;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultListCellRenderer;
+import javax.swing.DefaultListModel;
+import javax.swing.JList;
+import javax.swing.ListModel;
 import sup.desk.BDConnect;
+import sup.desk.dao.TicketDAO;
+import sup.desk.dao.impl.TicketDAOImpl;
 import sup.desk.to.Funcionario;
+import sup.desk.util.NumberLabel;
 
 /**
  *
@@ -17,6 +26,8 @@ import sup.desk.to.Funcionario;
 public class telaSuporte extends javax.swing.JFrame {
 
     private BDConnect bd;
+    
+    private Funcionario suporte;
     
     /**
      * Creates new form telaSuporte
@@ -27,26 +38,52 @@ public class telaSuporte extends javax.swing.JFrame {
         initComponents();
     }
     
-     public telaSuporte(BDConnect bd) {
+     public telaSuporte(BDConnect bd) throws Exception{
         this.bd = bd;
         initComponents();
+        populateJList();
     }
 
-    telaSuporte(telaLogin aThis, boolean b) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void populateJList() throws Exception{
+        TicketDAOImpl ticketDao = new TicketDAOImpl(this.bd);
+        ArrayList tickets = ticketDao.findTicketBySupportId(suporte.getId());
+        DefaultListModel lModel = new DefaultListModel();
+       for(int i=0; i<tickets.size();i++){
+           NumberLabel ticket = (NumberLabel) tickets.get(i);
+           lModel.addElement(ticket);
+       }
+       listaTarefas.setModel(lModel);
+       listaTarefas.setCellRenderer(new TicketListCellRenderer());
     }
+     
+    class TicketListCellRenderer extends DefaultListCellRenderer {
+    public Component getListCellRendererComponent(JList<?> list,
+                                 Object value,
+                                 int index,
+                                 boolean isSelected,
+                                 boolean cellHasFocus) {
+        super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+        if (value instanceof NumberLabel) {
+            NumberLabel ticket = (NumberLabel)value;
+            setText(ticket.getLabel());
+            setToolTipText(String.valueOf(ticket.getNumber()));
+        }
+        return this;
+     }
+    }
+    
     public void setFuncionario(Funcionario func)
     {
+       this.suporte = func;
         try {
-            lbUserName.setText(func.getNome());
-            if(func.getCargoNome().equals("Suporte Tecnico"))
+            lbUserName.setText(this.suporte.getNome());
+            if(this.suporte.getCargoNome().equals("Suporte Tecnico"))
             {
                 lbCargo.setText("Suporte :");
             }
         } catch (Exception ex) {
             Logger.getLogger(telaSuporte.class.getName()).log(Level.SEVERE, null, ex);
         }
-       
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -80,9 +117,14 @@ public class telaSuporte extends javax.swing.JFrame {
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
+        listaTarefas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                listaTarefasMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(listaTarefas);
 
-        jLabel2.setText("Chamdos Atuais");
+        jLabel2.setText("Chamdos Atuais:");
 
         lbCargo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
@@ -189,6 +231,18 @@ public class telaSuporte extends javax.swing.JFrame {
         this.dispose();
 // TODO add your handling code here:
     }//GEN-LAST:event_btnLogoutMouseClicked
+
+    private void listaTarefasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listaTarefasMouseClicked
+        ListModel lModel = listaTarefas.getModel();
+        NumberLabel ticket = (NumberLabel) lModel.getElementAt(listaTarefas.getSelectedIndex());
+        TelaChamado tChamado = null; 
+        try {
+            tChamado = new TelaChamado(ticket, this.bd);
+        } catch (Exception ex) {
+            Logger.getLogger(telaGerente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        tChamado.setVisible(true);
+    }//GEN-LAST:event_listaTarefasMouseClicked
 
     /**
      * @param args the command line arguments
