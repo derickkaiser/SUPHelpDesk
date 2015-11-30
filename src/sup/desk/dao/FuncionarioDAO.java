@@ -18,4 +18,6 @@ public interface FuncionarioDAO {
     public Funcionario findFuncionarioByName(String nome) throws Exception;    
     public ArrayList findIdNameAllFuncionario() throws Exception;
     public Funcionario findFuncionarioByLogin(String login, String senha) throws Exception;
+    public void updateFuncionario(Funcionario funcionario) throws Exception;
+    public void insertFuncionario(Funcionario funcionario) throws Exception;
 }

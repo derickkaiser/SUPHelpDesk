@@ -6,6 +6,7 @@
 
 package sup.desk.dao;
 
+import java.util.ArrayList;
 import sup.desk.to.Cargo;
 
 /**
@@ -14,4 +15,5 @@ import sup.desk.to.Cargo;
  */
 public interface CargoDAO {
     public Cargo findCargoById(int id) throws Exception;
+    public ArrayList findAllCargo() throws Exception;
 }

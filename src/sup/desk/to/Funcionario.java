@@ -1,6 +1,5 @@
 package sup.desk.to;
 
-import java.sql.ResultSet;
 import java.util.Date;
 
 public class Funcionario {
@@ -9,7 +8,7 @@ public class Funcionario {
         String email;
         String telefone;
         String ramal;
-        Date dataMatricula;
+        String dataMatricula;
         String cargoNome;
         String login;
 	String senha;
@@ -54,11 +53,11 @@ public class Funcionario {
         this.ramal = ramal;
     }
 
-    public Date getDataMatricula() {
+    public String getDataMatricula() {
         return dataMatricula;
     }
 
-    public void setDataMatricula(Date dataMatricula) {
+    public void setDataMatricula(String dataMatricula) {
         this.dataMatricula = dataMatricula;
     }
 
@@ -86,7 +85,7 @@ public class Funcionario {
         this.senha = senha;
     }
 
-    public Funcionario(int id, String nome, String email, String telefone, String ramal, Date dataMatricula, String cargoNome, String login, String senha) {
+    public Funcionario(int id, String nome, String email, String telefone, String ramal, String dataMatricula, String cargoNome, String login, String senha) {
         this.id = id;
         this.nome = nome;
         this.email = email;

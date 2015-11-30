@@ -44,8 +44,10 @@ public class FuncionarioDAOImpl implements FuncionarioDAO {
         funcionario.setEmail(rs.getString("ID_CARGO"));
         funcionario.setTelefone(rs.getString("E_MAIL"));
         funcionario.setRamal(rs.getString("TELEFONE"));
-        funcionario.setDataMatricula(rs.getDate("DATA_MATRICULA"));
-        funcionario.setCargoNome(rs.getString("ID_CARGO"));
+        funcionario.setDataMatricula(String.valueOf(rs.getDate("DATA_MATRICULA")));
+        CargoDAOImpl cargoDao = new CargoDAOImpl(this.bd);
+        Cargo cargo = cargoDao.findCargoById(rs.getInt("ID_CARGO"));
+        funcionario.setCargoNome(cargo.getDescricao());
         funcionario.setLogin(rs.getString("USERNAME"));
         funcionario.setSenha(rs.getString("SENHA"));
         return funcionario;
@@ -72,7 +74,7 @@ public class FuncionarioDAOImpl implements FuncionarioDAO {
             funcionario.setEmail(rs.getString("ID_CARGO"));
             funcionario.setTelefone(rs.getString("E_MAIL"));
             funcionario.setRamal(rs.getString("TELEFONE"));
-            funcionario.setDataMatricula(rs.getDate("DATA_MATRICULA"));
+            funcionario.setDataMatricula(String.valueOf(rs.getDate("DATA_MATRICULA")));
             funcionario.setCargoNome(rs.getString(""));
             funcionario.setLogin(rs.getString("USERNAME"));
             funcionario.setSenha(rs.getString("SENHA"));
@@ -96,7 +98,7 @@ public class FuncionarioDAOImpl implements FuncionarioDAO {
                     CargoDAOImpl cargoDao = new CargoDAOImpl(this.bd);
                     Cargo cargo = cargoDao.findCargoById(rs.getInt("ID_CARGO"));
                     func.setCargoNome(cargo.getDescricao());
-                    func.setDataMatricula(rs.getDate("DATA_MATRICULA"));
+                    func.setDataMatricula(String.valueOf(rs.getDate("DATA_MATRICULA")));
                     func.setRamal(rs.getString("RAMAL"));
                     func.setLogin(rs.getString("USERNAME"));
                     func.setSenha(rs.getString("SENHA"));
@@ -123,6 +125,26 @@ public class FuncionarioDAOImpl implements FuncionarioDAO {
           funcionarios.add(new NumberLabel(rs.getInt("ID_FUNCIONARIO"), rs.getString("NOME_FUNCIONARIO")));
         }while(rs.next());
         return funcionarios;
+    }
+
+    @Override
+    public void updateFuncionario(Funcionario func) throws Exception{
+       String updateQuery = "UPDATE BDIM26.FUNCIONARIO SET NOME='"+func.getNome()+"', ID_CARGO="+Integer.valueOf(func.getCargoNome())+", EMAIL='"+func.getEmail() + 
+       "', DATA_MATRICULA=TO_DATE('" + func.getDataMatricula() + "','yyyy-mm-dd'), RAMAL='" + func.getRamal() + "', TELEFONE='" + func.getTelefone() +
+       "', LOGIN='" + func.getLogin() + "', SENHA='" + func.getSenha() + "' WHERE ID_FUNCIONARIO=" + func.getId();
+       System.out.println(updateQuery);
+       bd.update(updateQuery);
+    }
+
+    @Override
+    public void insertFuncionario(Funcionario funcionario) throws Exception {
+        String insertSql = "INSERT INTO FUNCIONARIO(ID_FUNCIONARIO, EMAIL, ID_CARGO," +
+        " DATA_MATRICULA, RAMAL, TELEFONE, LOGIN, SENHA) "
+        +"VALUES(SEQ_FUNCIONARIO.NEXTVAL, '" + funcionario.getEmail() + 
+        "', '" + Integer.valueOf(funcionario.getCargoNome()) +"', TO_DATE('"+ funcionario.getDataMatricula() + "','yyyy-mm-dd'), "
+        + funcionario.getRamal() + ", " + funcionario.getTelefone() + ", " + funcionario.getLogin() +  ", " + funcionario.getSenha() + ")";
+        System.out.println(insertSql);
+        bd.update(insertSql);
     }
     
 }

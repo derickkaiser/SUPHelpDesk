@@ -7,6 +7,7 @@
 package sup.desk.dao.impl;
 
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import sup.desk.BDConnect;
 import sup.desk.dao.CargoDAO;
 import sup.desk.to.Cargo;
@@ -31,5 +32,27 @@ public class CargoDAOImpl implements CargoDAO{
        cargo.setId(rs.getInt("ID_CARGO"));
        cargo.setDescricao(rs.getString("NOME"));
      return cargo;
+    }
+    
+    @Override
+    public ArrayList findAllCargo() throws Exception{
+      ResultSet rs = null;
+        int i=0;
+        try {
+            rs = bd.query("SELECT * FROM BDIM26.CARGO");
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+        rs.last();
+        int qtty = rs.getRow();
+        rs.first();
+        ArrayList cargos = new ArrayList();
+        do{
+        Cargo cargo = new Cargo();
+        cargo.setId(rs.getInt("ID_CARGO"));
+        cargo.setDescricao(rs.getString("DESCRICAO"));
+            cargos.add(cargo);
+        }while(rs.next());
+        return cargos;
     }
 }

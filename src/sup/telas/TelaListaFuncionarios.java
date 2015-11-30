@@ -67,6 +67,11 @@ public class TelaListaFuncionarios extends javax.swing.JFrame {
         jLabel1.setText("Funcionários");
 
         jButton1.setText("Cadastrar");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -102,14 +107,19 @@ public class TelaListaFuncionarios extends javax.swing.JFrame {
     private void listFuncMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listFuncMouseClicked
         ListModel lModel = listFunc.getModel();
         NumberLabel func = (NumberLabel) lModel.getElementAt(listFunc.getSelectedIndex());
-        TelaChamado tChamado = null; 
+        TelaFuncionarios tFuncs = null; 
         try {
-            tChamado = new TelaChamado(func);
+            tFuncs = new TelaFuncionarios(func, this.bd);
+            tFuncs.setVisible(true);
         } catch (Exception ex) {
             Logger.getLogger(telaGerente.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        tChamado.setVisible(true);
+        }        
     }//GEN-LAST:event_listFuncMouseClicked
+
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        TelaFuncionarios tFuncs = new TelaFuncionarios(this.bd);
+        tFuncs.setVisible(true);
+    }//GEN-LAST:event_jButton1MouseClicked
 
     /**
      * @param args the command line arguments
