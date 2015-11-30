@@ -40,6 +40,13 @@ public class telaGerente extends javax.swing.JFrame {
         populateComponents();
         
     }
+    
+    public telaGerente(BDConnect bd) throws Exception{
+        this.bd = bd;
+        initComponents();
+        populateComponents();
+        
+    }
 
     private void populateComponents() throws Exception{
        TicketDAOImpl ticketDao = new TicketDAOImpl(bd);
@@ -244,7 +251,7 @@ public class telaGerente extends javax.swing.JFrame {
         NumberLabel ticket = (NumberLabel) lModel.getElementAt(listaTarefas.getSelectedIndex());
         TelaChamado tChamado = null; 
         try {
-            tChamado = new TelaChamado(ticket);
+            tChamado = new TelaChamado(ticket, this.bd);
         } catch (Exception ex) {
             Logger.getLogger(telaGerente.class.getName()).log(Level.SEVERE, null, ex);
         }

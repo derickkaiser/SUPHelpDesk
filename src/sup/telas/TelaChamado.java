@@ -44,9 +44,8 @@ public class TelaChamado extends javax.swing.JFrame {
     /**
      * Creates new form TelaChamado
      */
-    public TelaChamado(NumberLabel ticket) throws Exception{
-        bd = new BDConnect();
-        bd.getConexao();
+    public TelaChamado(NumberLabel ticket, BDConnect bd) throws Exception{
+        this.bd = bd;
         initComponents();
         populateComponents();
         populateWithTicket(ticket);

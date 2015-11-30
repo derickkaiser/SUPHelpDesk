@@ -7,6 +7,7 @@ package sup.telas;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import sup.desk.BDConnect;
 import sup.desk.to.Funcionario;
 import sup.telas.telaLogin;
 import sup.telas.telaSuporte;
@@ -17,10 +18,19 @@ import sup.telas.telaSuporte;
  */
 public class telaUsuario extends javax.swing.JFrame {
 
+    private BDConnect bd;
+    
     /**
      * Creates new form telaSuporte
      */
-    public telaUsuario() {
+    public telaUsuario() throws Exception{
+        this.bd = new BDConnect();
+        bd.getConexao();
+        initComponents();
+    }
+    
+    public telaUsuario(BDConnect bd) throws Exception{
+        this.bd = bd;
         initComponents();
     }
 
@@ -195,7 +205,11 @@ public class telaUsuario extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 
-                new telaUsuario().setVisible(true);
+                try {
+                    new telaUsuario().setVisible(true);
+                } catch (Exception ex) {
+                    Logger.getLogger(telaUsuario.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 
             }
         });

@@ -7,6 +7,7 @@ package sup.telas;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import sup.desk.BDConnect;
 import sup.desk.to.Funcionario;
 
 /**
@@ -15,10 +16,19 @@ import sup.desk.to.Funcionario;
  */
 public class telaSuporte extends javax.swing.JFrame {
 
+    private BDConnect bd;
+    
     /**
      * Creates new form telaSuporte
      */
-    public telaSuporte() {
+    public telaSuporte() throws Exception{
+        bd = new BDConnect();
+        bd.getConexao();
+        initComponents();
+    }
+    
+     public telaSuporte(BDConnect bd) {
+        this.bd = bd;
         initComponents();
     }
 
@@ -212,7 +222,11 @@ public class telaSuporte extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 
-                new telaSuporte().setVisible(true);
+                try {
+                    new telaSuporte().setVisible(true);
+                } catch (Exception ex) {
+                    Logger.getLogger(telaSuporte.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 
             }
         });
