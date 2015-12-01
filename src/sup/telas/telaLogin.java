@@ -129,7 +129,7 @@ public class telaLogin extends javax.swing.JFrame {
 
     private void btnLogarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogarActionPerformed
         try {
-            bd.getConexao();
+            //bd.getConexao();
             if(!ValidationUtils.validateField(txtUser.getText()))
                JOptionPane.showMessageDialog(this, "Campo Login está vazio.", "Erro!",JOptionPane.ERROR_MESSAGE);
             if(!ValidationUtils.validateField(txtPassword.getText()))
@@ -143,41 +143,35 @@ public class telaLogin extends javax.swing.JFrame {
             
             if(func == null)
                 JOptionPane.showMessageDialog(this, "Login inválido.", "Erro!",JOptionPane.ERROR_MESSAGE);
-            if(!txtPassword.getText().toLowerCase().equals(func.getSenha())){
+            else if(!txtPassword.getText().toLowerCase().equals(func.getSenha())){
                 JOptionPane.showMessageDialog(this, "Senha inválida.", "Erro!",JOptionPane.ERROR_MESSAGE);
-            }
-            
-            lbErro.setText("Logado com Sucesso espere!");
-            btnLogar.setEnabled(false);
-            btnLimpar.setEnabled(false);
-            if (func.getCargoNome().equals("Suporte Tecnico"))
-            {
-                telaSuporte ts = new telaSuporte(this.bd, func);
-                ts.setVisible(true);
-                System.out.println("é Suporte");
-                this.setVisible(false);
-                this.dispose();
-            }
-            
-            else if (func.getCargoNome().equals("Gerente Tecnico"))
-            {
+            }else{
+                lbErro.setText("Logado com Sucesso espere!");
+                btnLogar.setEnabled(false);
+                btnLimpar.setEnabled(false);
+                if (func.getCargoNome().equals("Suporte Tecnico")){
+                    telaSuporte ts = new telaSuporte(this.bd, func);
+                    ts.setVisible(true);
+                    System.out.println("é Suporte");
+                    this.setVisible(false);
+                    this.dispose();
+               }             
+            else if (func.getCargoNome().equals("Gerente Tecnico")){
                 telaGerente tg = new telaGerente(this.bd);
                 tg.setFuncionario(func);
                 tg.setVisible(true);
                 System.out.println("é Gerente");
                 this.setVisible(false);
                 this.dispose();
-            }
-            else
-            {
+            }else{
                 telaUsuario tu = new telaUsuario(this.bd, func);
                 tu.setFuncionario(func);
                 tu.setVisible(true);
                 System.out.println("é Usuario");
                 this.setVisible(false);
                 this.dispose();
-            }
-            
+             }
+           }
             // TODO add your handling code here:
         } catch (Exception ex) {
             Logger.getLogger(telaLogin.class.getName()).log(Level.SEVERE, null, ex);
