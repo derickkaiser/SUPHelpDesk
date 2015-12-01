@@ -186,4 +186,34 @@ public class TicketDAOImpl implements TicketDAO{
         System.out.println(insertSql);
         bd.update(insertSql);
     }
+
+    @Override
+    public ArrayList findIdTitleTicketBySupportId(int empId) throws Exception {
+        ResultSet rs;
+        int i=0;
+        ArrayList tickets = new ArrayList();
+        rs = bd.query("SELECT ID_TICKET, TITULO FROM BDIM26.TICKET WHERE ID_RESPONSAVEL=" + empId);
+        rs.last();
+        int qtty = rs.getRow();
+        rs.first();        
+        do{
+          tickets.add(new NumberLabel(rs.getInt("ID_TICKET"), rs.getString("TITULO")));
+        }while(rs.next());
+        return tickets;
+    }
+
+    @Override
+    public ArrayList findIdTitleTicketByResponsibleId(int respId) throws Exception {
+        ResultSet rs;
+        int i=0;
+        ArrayList tickets = new ArrayList();
+        rs = bd.query("SELECT ID_TICKET, TITULO FROM BDIM26.TICKET WHERE ID_CLIENTE=" + respId);
+        rs.last();
+        int qtty = rs.getRow();
+        rs.first();        
+        do{
+          tickets.add(new NumberLabel(rs.getInt("ID_TICKET"), rs.getString("TITULO")));
+        }while(rs.next());
+        return tickets;
+    }
 }

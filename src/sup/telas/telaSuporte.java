@@ -38,15 +38,16 @@ public class telaSuporte extends javax.swing.JFrame {
         initComponents();
     }
     
-     public telaSuporte(BDConnect bd) throws Exception{
+     public telaSuporte(BDConnect bd, Funcionario func) throws Exception{
         this.bd = bd;
         initComponents();
+        this.suporte = func;
         populateJList();
     }
 
     public void populateJList() throws Exception{
         TicketDAOImpl ticketDao = new TicketDAOImpl(this.bd);
-        ArrayList tickets = ticketDao.findTicketBySupportId(suporte.getId());
+        ArrayList tickets = ticketDao.findIdTitleTicketBySupportId(suporte.getId());
         DefaultListModel lModel = new DefaultListModel();
        for(int i=0; i<tickets.size();i++){
            NumberLabel ticket = (NumberLabel) tickets.get(i);

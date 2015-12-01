@@ -5,10 +5,18 @@
  */
 package sup.telas;
 
+import java.awt.Component;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultListCellRenderer;
+import javax.swing.DefaultListModel;
+import javax.swing.JList;
+import javax.swing.ListModel;
 import sup.desk.BDConnect;
+import sup.desk.dao.impl.TicketDAOImpl;
 import sup.desk.to.Funcionario;
+import sup.desk.util.NumberLabel;
 import sup.telas.telaLogin;
 import sup.telas.telaSuporte;
 
@@ -18,6 +26,8 @@ import sup.telas.telaSuporte;
  */
 public class telaUsuario extends javax.swing.JFrame {
 
+    private Funcionario usuario;
+    
     private BDConnect bd;
     
     /**
@@ -29,9 +39,11 @@ public class telaUsuario extends javax.swing.JFrame {
         initComponents();
     }
     
-    public telaUsuario(BDConnect bd) throws Exception{
+    public telaUsuario(BDConnect bd, Funcionario func) throws Exception{
         this.bd = bd;
+        this.usuario = func;
         initComponents();
+        populateJList();
     }
 
     telaUsuario(telaLogin aThis, boolean b) {
@@ -48,6 +60,35 @@ public class telaUsuario extends javax.swing.JFrame {
         }
        
     }
+    
+    public void populateJList() throws Exception{
+       TicketDAOImpl ticketDao = new TicketDAOImpl(this.bd);
+       ArrayList tickets = ticketDao.findIdTitleTicketByResponsibleId(usuario.getId());
+       DefaultListModel lModel = new DefaultListModel();
+       for(int i=0; i<tickets.size();i++){
+           NumberLabel ticket = (NumberLabel) tickets.get(i);
+           lModel.addElement(ticket);
+       }
+       listaUsuario.setModel(lModel);
+       listaUsuario.setCellRenderer(new TicketListCellRenderer());
+    }
+     
+    class TicketListCellRenderer extends DefaultListCellRenderer {
+    public Component getListCellRendererComponent(JList<?> list,
+                                 Object value,
+                                 int index,
+                                 boolean isSelected,
+                                 boolean cellHasFocus) {
+        super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+        if (value instanceof NumberLabel) {
+            NumberLabel ticket = (NumberLabel)value;
+            setText(ticket.getLabel());
+            setToolTipText(String.valueOf(ticket.getNumber()));
+        }
+        return this;
+     }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -59,7 +100,7 @@ public class telaUsuario extends javax.swing.JFrame {
 
         lbUserName = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        listaTarefas = new javax.swing.JList<>();
+        listaUsuario = new javax.swing.JList<String>();
         jLabel2 = new javax.swing.JLabel();
         lbCargo = new javax.swing.JLabel();
         scrollPane1 = new java.awt.ScrollPane();
@@ -76,14 +117,14 @@ public class telaUsuario extends javax.swing.JFrame {
 
         lbUserName.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
 
-        listaTarefas.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Mouse Novo", "Tela Preta", "Teclado com Defeito" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
+        listaUsuario.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                listaUsuarioMouseClicked(evt);
+            }
         });
-        jScrollPane1.setViewportView(listaTarefas);
+        jScrollPane1.setViewportView(listaUsuario);
 
-        jLabel2.setText("Meus Chamdos :");
+        jLabel2.setText("Meus Chamados :");
 
         lbCargo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
@@ -173,6 +214,18 @@ public class telaUsuario extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnLogoutActionPerformed
 
+    private void listaUsuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listaUsuarioMouseClicked
+        ListModel lModel = listaUsuario.getModel();
+        NumberLabel ticket = (NumberLabel) lModel.getElementAt(listaUsuario.getSelectedIndex());
+        TelaChamado tChamado = null; 
+        try {
+            tChamado = new TelaChamado(ticket, this.bd);
+        } catch (Exception ex) {
+            Logger.getLogger(telaGerente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        tChamado.setVisible(true);
+    }//GEN-LAST:event_listaUsuarioMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -228,7 +281,7 @@ public class telaUsuario extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lbCargo;
     private javax.swing.JLabel lbUserName;
-    private javax.swing.JList<String> listaTarefas;
+    private javax.swing.JList<String> listaUsuario;
     private java.awt.ScrollPane scrollPane1;
     // End of variables declaration//GEN-END:variables
 }

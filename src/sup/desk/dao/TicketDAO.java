@@ -20,6 +20,8 @@ public interface TicketDAO {
        public Ticket findTicketByPriority(int priority) throws Exception;  
        public Ticket findTicketById(int id) throws Exception;
        public ArrayList findIdTitleAllTickets() throws Exception;
+       public ArrayList findIdTitleTicketBySupportId(int empId) throws Exception;
+       public ArrayList findIdTitleTicketByResponsibleId(int respId) throws Exception;
        public void updateTicket(Ticket ticket) throws Exception;
        public void insertTicket(Ticket ticket) throws Exception;
 }

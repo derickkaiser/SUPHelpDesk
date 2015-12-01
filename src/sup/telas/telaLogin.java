@@ -140,8 +140,7 @@ public class telaLogin extends javax.swing.JFrame {
             btnLimpar.setEnabled(false);
             if (func.getCargoNome().equals("Suporte Tecnico"))
             {
-                telaSuporte ts = new telaSuporte(this.bd);
-                ts.setFuncionario(func);
+                telaSuporte ts = new telaSuporte(this.bd, func);
                 ts.setVisible(true);
                 System.out.println("é Suporte");
                 this.setVisible(false);
@@ -159,7 +158,7 @@ public class telaLogin extends javax.swing.JFrame {
             }
             else
             {
-                telaUsuario tu = new telaUsuario(this.bd);
+                telaUsuario tu = new telaUsuario(this.bd, func);
                 tu.setFuncionario(func);
                 tu.setVisible(true);
                 System.out.println("é Usuario");
