@@ -14,12 +14,14 @@ import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import sup.desk.BDConnect;
 import sup.desk.dao.impl.CargoDAOImpl;
 import sup.desk.dao.impl.FuncionarioDAOImpl;
 import sup.desk.to.Cargo;
 import sup.desk.to.Funcionario;
 import sup.desk.util.NumberLabel;
+import sup.desk.util.ValidationUtils;
 
 /**
  *
@@ -341,6 +343,20 @@ public class TelaFuncionarios extends javax.swing.JFrame {
     
     private void btnAlterarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAlterarMouseClicked
         btnAlterar.setEnabled(false);
+        if(!ValidationUtils.validateField(txtNome.getText()))
+            JOptionPane.showMessageDialog(this, "Campo Nome está vazio.", "Erro!",JOptionPane.ERROR_MESSAGE);
+        if(!ValidationUtils.validateField(txtEmail.getText()))
+            JOptionPane.showMessageDialog(this, "Campo E-mail está vazio.", "Erro!",JOptionPane.ERROR_MESSAGE);
+        if(!ValidationUtils.validateField(txtTelefone.getText()))
+            JOptionPane.showMessageDialog(this, "Campo Telefone está vazio.", "Erro!",JOptionPane.ERROR_MESSAGE);
+        if(!ValidationUtils.validateField(txtRamal.getText()))
+            JOptionPane.showMessageDialog(this, "Campo Ramal está vazio.", "Erro!",JOptionPane.ERROR_MESSAGE);
+        if(!ValidationUtils.validateDate(txtDataMatricula.getText()))
+            JOptionPane.showMessageDialog(this, "Campo Data de Matrícula está com data inválida(Esperado: yyyy-mm-dd).", "Erro!",JOptionPane.ERROR_MESSAGE);
+        if(!ValidationUtils.validateField(txtLogin.getText()))
+            JOptionPane.showMessageDialog(this, "Campo Login está vazio.", "Erro!",JOptionPane.ERROR_MESSAGE);
+        if(!ValidationUtils.validateField(txtSenha.getText()))
+            JOptionPane.showMessageDialog(this, "Campo Senha está vazio.", "Erro!",JOptionPane.ERROR_MESSAGE);
         if(!isInsert){
             try {
                 FuncionarioDAOImpl funcDao = new FuncionarioDAOImpl(this.bd);
@@ -348,8 +364,8 @@ public class TelaFuncionarios extends javax.swing.JFrame {
                 Funcionario func = new Funcionario(Integer.valueOf(txtCodigo.getText()), txtNome.getText(), txtEmail.getText(), txtTelefone.getText(), 
                   txtRamal.getText(), txtDataMatricula.getText(), String.valueOf(cargo.getNumber()), txtLogin.getText(), txtSenha.getText());
                 funcDao.updateFuncionario(func);
-                Dialog dialog = new Dialog(this, "Atualizacao do funcionario "+ lblNome.getText() + " atualizado com sucesso.");
-                dialog.setVisible(true);
+                JOptionPane.showMessageDialog(this,
+    "Atualização do funcionário  " + txtNome.getText() + " feita com sucesso.");
             } catch (Exception ex) {
                 Logger.getLogger(TelaChamado.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -361,8 +377,8 @@ public class TelaFuncionarios extends javax.swing.JFrame {
                 Funcionario func = new Funcionario(0, txtNome.getText(), txtEmail.getText(), txtTelefone.getText(), 
                   txtRamal.getText(), txtDataMatricula.getText(), String.valueOf(cargo.getNumber()), txtLogin.getText(), txtSenha.getText());
                 funcDao.insertFuncionario(func);
-                Dialog dialog = new Dialog(this, "Insercao do funcionario "+ lblNome.getText() + " atualizado com sucesso.");
-                dialog.setVisible(true);
+                            JOptionPane.showMessageDialog(this,
+    "Inserção do funcionário  " + txtNome.getText() + " feita com sucesso.");
             } catch (Exception ex) {
                 Logger.getLogger(TelaFuncionarios.class.getName()).log(Level.SEVERE, null, ex);
             }

@@ -21,15 +21,16 @@ public final class ValidationUtils {
     
     
     public static boolean validateField(String field){
-        String fields = (String) field;
+        return !((field.isEmpty()) || (field.trim().equals("")));  
+    }
+    
+    public static boolean validateDate(String date){
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
-        if((fields.isEmpty()) || (fields.trim().equals("")))
-            return false;
         try {
-            sdf.parse(fields);
+            sdf.parse(date);
         } catch (ParseException ex) {
             return false;
         }
-        return true;  
+        return true;
     }
 }

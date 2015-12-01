@@ -16,6 +16,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JFrame;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import sup.desk.BDConnect;
 import sup.desk.dao.impl.CategoriaDAOImpl;
@@ -28,6 +29,7 @@ import sup.desk.to.Prioridade;
 import sup.desk.to.Status;
 import sup.desk.to.Ticket;
 import sup.desk.util.NumberLabel;
+import sup.desk.util.ValidationUtils;
 
 /**
  *
@@ -51,7 +53,15 @@ public class TelaChamado extends javax.swing.JFrame {
         populateWithTicket(ticket);
     }
     
+    public TelaChamado(BDConnect bd) throws Exception{
+        this.bd = bd;
+        initComponents();
+        populateComponents();
+    }
+    
     public TelaChamado() throws Exception{
+        this.bd = new BDConnect();
+        this.bd.getConexao();
         initComponents();
         populateComponents();
     }
@@ -349,6 +359,14 @@ public class TelaChamado extends javax.swing.JFrame {
 
     private void btnAlterarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAlterarMouseClicked
         btnAlterar.setEnabled(false);
+        if(!ValidationUtils.validateField(txtDescricao.getText()))
+            JOptionPane.showMessageDialog(this, "Campo Descricao está vazio.", "Erro!",JOptionPane.ERROR_MESSAGE);
+        if(!ValidationUtils.validateDate(txtDataAbertura.getText()))
+            JOptionPane.showMessageDialog(this, "Campo Data de Abertura está com data inválida(Esperado: yyyy-mm-dd).", "Erro!",JOptionPane.ERROR_MESSAGE);
+        if(!ValidationUtils.validateField(txtDataConclusao.getText()))
+            JOptionPane.showMessageDialog(this, "Campo Data de Conclusão está com data inválida(Esperado: yyyy-mm-dd).", "Erro!",JOptionPane.ERROR_MESSAGE);
+        if(!ValidationUtils.validateField(txtDataPrevisao.getText()))
+            JOptionPane.showMessageDialog(this, "Campo Data de Previsão está com data inválida(Esperado: yyyy-mm-dd).", "Erro!",JOptionPane.ERROR_MESSAGE);
         try {
             TicketDAOImpl ticketDao = new TicketDAOImpl(this.bd);
             NumberLabel responsavel = (NumberLabel) comboResponsavel.getItemAt(comboResponsavel.getSelectedIndex());
@@ -361,8 +379,9 @@ public class TelaChamado extends javax.swing.JFrame {
                     String.valueOf(status.getId()), String.valueOf(categoria.getId()), txtDataAbertura.getText(), 
                     txtDataConclusao.getText(), txtDataPrevisao.getText());
             ticketDao.updateTicket(ticket);
-            Dialog dialog = new Dialog(this, "Atalizacao do chamado "+ lblTitulo.getText() + "atualizado com sucesso.");
-            dialog.setVisible(true);
+            JOptionPane.showMessageDialog(this,
+    "Atualização do ticket " + lblTitulo.getText() + " feita com sucesso.");
+            btnAlterar.setEnabled(true);
         } catch (Exception ex) {
             Logger.getLogger(TelaChamado.class.getName()).log(Level.SEVERE, null, ex);
         }

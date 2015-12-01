@@ -6,6 +6,8 @@
 package sup.desk.to;
 
 import java.util.Date;
+import javax.swing.JOptionPane;
+import sup.desk.util.ValidationUtils;
 
 /**
  *
@@ -42,6 +44,7 @@ public class Ticket {
 
     public String getDescricao() {
         return descricao;
+        
     }
 
     public void setDescricao(String descricao) {

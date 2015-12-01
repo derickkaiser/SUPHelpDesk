@@ -20,6 +20,7 @@ import sup.desk.to.Prioridade;
 import sup.desk.to.Status;
 import sup.desk.to.Ticket;
 import sup.desk.util.NumberLabel;
+import sup.desk.util.ValidationUtils;
 
 /**
  *
@@ -126,7 +127,7 @@ public class TicketDAOImpl implements TicketDAO{
         ResultSet rs;
         int i=0;
         ArrayList tickets = new ArrayList();
-        rs = bd.query("SELECT ID_TICKET, TITULO FROM BDIM26.TICKET");
+        rs = bd.query("SELECT ID_TICKET, TITULO FROM BDIM26.TICKET WHERE STATUS!=1");
         rs.last();
         int qtty = rs.getRow();
         rs.first();        
@@ -167,7 +168,7 @@ public class TicketDAOImpl implements TicketDAO{
     }
 
     @Override
-    public void updateTicket(Ticket ticket) throws Exception {
+    public void updateTicket(Ticket ticket) throws Exception {           
        String updateQuery = "UPDATE BDIM26.TICKET SET DESCRICAO='"+ticket.getDescricao()+"', ID_RESPONSAVEL="+Integer.valueOf(ticket.getSuporteNome())+", ID_CLIENTE="+Integer.valueOf(ticket.getClienteNome()) + 
                ", ID_PRIORIDADE=" + Integer.valueOf(ticket.getPrioridadeDesc()) + ", ID_STATUS=" + Integer.valueOf(ticket.getStatusDesc()) + ", DATA_ABERTURA=TO_DATE('" + String.valueOf(ticket.getDataAbertura()) +
                "','yyyy-mm-dd'), DATA_CONCLUSAO=TO_DATE('" + String.valueOf(ticket.getDataConclusao()) + "','yyyy-mm-dd'), DATA_PREVISAO=TO_DATE('" + String.valueOf(ticket.getDataPrevisao()) + "','yyyy-mm-dd') WHERE ID_TICKET=" + ticket.getId();
@@ -192,7 +193,7 @@ public class TicketDAOImpl implements TicketDAO{
         ResultSet rs;
         int i=0;
         ArrayList tickets = new ArrayList();
-        rs = bd.query("SELECT ID_TICKET, TITULO FROM BDIM26.TICKET WHERE ID_RESPONSAVEL=" + empId);
+        rs = bd.query("SELECT ID_TICKET, TITULO FROM BDIM26.TICKET WHERE ID_RESPONSAVEL=" + empId + " AND STATUS!=1");
         rs.last();
         int qtty = rs.getRow();
         rs.first();        
@@ -207,7 +208,7 @@ public class TicketDAOImpl implements TicketDAO{
         ResultSet rs;
         int i=0;
         ArrayList tickets = new ArrayList();
-        rs = bd.query("SELECT ID_TICKET, TITULO FROM BDIM26.TICKET WHERE ID_CLIENTE=" + respId);
+        rs = bd.query("SELECT ID_TICKET, TITULO FROM BDIM26.TICKET WHERE ID_CLIENTE=" + respId + " AND STATUS!=1");
         rs.last();
         int qtty = rs.getRow();
         rs.first();        

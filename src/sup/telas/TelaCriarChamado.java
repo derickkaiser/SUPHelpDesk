@@ -15,6 +15,7 @@ import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import sup.desk.BDConnect;
 import sup.desk.dao.impl.CategoriaDAOImpl;
 import sup.desk.dao.impl.FuncionarioDAOImpl;
@@ -26,6 +27,7 @@ import sup.desk.to.Prioridade;
 import sup.desk.to.Status;
 import sup.desk.to.Ticket;
 import sup.desk.util.NumberLabel;
+import sup.desk.util.ValidationUtils;
 
 /**
  *
@@ -347,6 +349,16 @@ public class TelaCriarChamado extends javax.swing.JFrame {
 
     private void btnAlterarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAlterarMouseClicked
         btnAlterar.setEnabled(false);
+        if(!ValidationUtils.validateField(txtTitulo.getText()))
+            JOptionPane.showMessageDialog(this, "Campo Título está vazio.", "Erro!",JOptionPane.ERROR_MESSAGE);
+        if(!ValidationUtils.validateField(txtDescricao.getText()))
+            JOptionPane.showMessageDialog(this, "Campo Descricao está vazio.", "Erro!",JOptionPane.ERROR_MESSAGE);
+        if(!ValidationUtils.validateDate(txtDataAbertura.getText()))
+            JOptionPane.showMessageDialog(this, "Campo Data de Abertura está com data inválida(Esperado: yyyy-mm-dd).", "Erro!",JOptionPane.ERROR_MESSAGE);
+        if(!ValidationUtils.validateField(txtDataConclusao.getText()))
+            JOptionPane.showMessageDialog(this, "Campo Data de Conclusão está com data inválida(Esperado: yyyy-mm-dd).", "Erro!",JOptionPane.ERROR_MESSAGE);
+        if(!ValidationUtils.validateField(txtDataPrevisao.getText()))
+            JOptionPane.showMessageDialog(this, "Campo Data de Previsão está com data inválida(Esperado: yyyy-mm-dd).", "Erro!",JOptionPane.ERROR_MESSAGE);
         try {
             TicketDAOImpl ticketDao = new TicketDAOImpl(this.bd);
             NumberLabel responsavel = (NumberLabel) comboResponsavel.getItemAt(comboResponsavel.getSelectedIndex());
@@ -359,8 +371,8 @@ public class TelaCriarChamado extends javax.swing.JFrame {
                     String.valueOf(categoria.getId()), txtDataAbertura.getText(), 
                     txtDataConclusao.getText(), txtDataPrevisao.getText());
             ticketDao.insertTicket(ticket);
-            Dialog dialog = new Dialog(this, "Chamado "+ lblTitulo.getText() + " cadastrado com sucesso.");
-            dialog.setVisible(true);
+            JOptionPane.showMessageDialog(this,
+    "Inserção do ticket " + lblTitulo.getText() + " feita com sucesso.");
         } catch (Exception ex) {
             Logger.getLogger(TelaChamado.class.getName()).log(Level.SEVERE, null, ex);
         }

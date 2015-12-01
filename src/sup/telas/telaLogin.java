@@ -7,9 +7,11 @@ package sup.telas;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import sup.desk.BDConnect;
 import sup.desk.dao.impl.FuncionarioDAOImpl;
 import sup.desk.to.Funcionario;
+import sup.desk.util.ValidationUtils;
 
 /**
  *
@@ -127,13 +129,23 @@ public class telaLogin extends javax.swing.JFrame {
 
     private void btnLogarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogarActionPerformed
         try {
-            bd.getConexao();  
+            bd.getConexao();
+            if(!ValidationUtils.validateField(txtUser.getText()))
+               JOptionPane.showMessageDialog(this, "Campo Login está vazio.", "Erro!",JOptionPane.ERROR_MESSAGE);
+            if(!ValidationUtils.validateField(txtPassword.getText()))
+               JOptionPane.showMessageDialog(this, "Campo Senha está vazio.", "Erro!",JOptionPane.ERROR_MESSAGE);
             String login = txtUser.getText().toLowerCase();
             String senha = txtPassword.getText().toLowerCase();
             
             FuncionarioDAOImpl funcionarioDao = new FuncionarioDAOImpl(this.bd);
             
             Funcionario func = funcionarioDao.findFuncionarioByLogin(login, senha);
+            
+            if(func == null)
+                JOptionPane.showMessageDialog(this, "Login inválido.", "Erro!",JOptionPane.ERROR_MESSAGE);
+            if(!txtPassword.getText().toLowerCase().equals(func.getSenha())){
+                JOptionPane.showMessageDialog(this, "Senha inválida.", "Erro!",JOptionPane.ERROR_MESSAGE);
+            }
             
             lbErro.setText("Logado com Sucesso espere!");
             btnLogar.setEnabled(false);
